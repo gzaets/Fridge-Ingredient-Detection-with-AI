@@ -38,6 +38,11 @@ next-env.d.ts
 # Python virtual environment
 yolov8-env/
 
+# Model files
+*.pt
+models/
+
+
 # Other system files
 .DS_Store
 .env
