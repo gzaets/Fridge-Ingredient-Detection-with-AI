@@ -7,9 +7,9 @@ import logging
 # Disable logging for cleaner output
 logging.getLogger("ultralytics").setLevel(logging.CRITICAL)
 
-def detect_objects(image_path):
+def detect_objects(image_path, confidence_threshold=0.5):
     # Load YOLOv8 model
-    model = YOLO('yolov8n.pt')  # Use 'yolov8n.pt' for lightweight or 'yolov8x.pt' for better accuracy
+    model = YOLO('yolov8x.pt')  # Use 'yolov8n.pt' for lightweight or 'yolov8x.pt' for better accuracy
 
     # Load image
     image = Image.open(image_path)
@@ -17,26 +17,20 @@ def detect_objects(image_path):
     # Run detection
     results = model(image)
 
-    # Check if results exist
+    ingredients = []
     if len(results) > 0 and hasattr(results[0], 'boxes'):
-        ingredients = []
         for box in results[0].boxes:  # boxes are tensor objects
-            # Extract label index and confidence
-            label_id = int(box.cls[0].item())  # Get the class index (as an integer)
-            confidence = float(box.conf[0].item())  # Get the confidence score (as a float)
-
-            # Convert label ID to actual class name
-            label = model.names[label_id]  # YOLOv8 provides class names in 'model.names'
-
-            ingredients.append({
-                "label": label,
-                "confidence": confidence
-            })
-
-        # Return only the ingredients list as JSON
-        return ingredients
-    else:
-        return []
+            confidence = float(box.conf[0].item())  # Get confidence score (as a float)
+            if confidence >= confidence_threshold:  # Only include confident predictions
+                label_id = int(box.cls[0].item())  # Get the class index
+                label = model.names[label_id]  # Convert class index to name
+                
+                ingredients.append({
+                    "label": label,
+                    "confidence": confidence
+                })
+    
+    return ingredients
 
 if __name__ == "__main__":
     try:
