@@ -41,6 +41,10 @@ yolov8-env/
 # Training Data
 archive/
 
+# Training Logs
+runs/
+detect/
+
 # Model files
 *.pt
 models/
