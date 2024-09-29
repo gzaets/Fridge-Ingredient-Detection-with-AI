@@ -38,6 +38,9 @@ next-env.d.ts
 # Python virtual environment
 yolov8-env/
 
+# Training Data
+archive/
+
 # Model files
 *.pt
 models/
