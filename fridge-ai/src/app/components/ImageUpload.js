@@ -30,7 +30,7 @@ export default function ImageUpload({ onResult }) {
     formData.append('image', image);
 
     try {
-      const response = await axios.post('/api/detect', formData, {
+      const response = await axios.post('/api/detect_with_aws', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
