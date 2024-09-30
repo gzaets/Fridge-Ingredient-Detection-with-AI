@@ -45,6 +45,9 @@ archive/
 runs/
 detect/
 
+# GPU Testing
+gpu_test/
+
 # Model files
 *.pt
 models/

@@ -1,3 +1,8 @@
+train: U:/GitHub/Fridge-Ingredient-Detection-with-AI/fridge-ai/archive/raw_data/public_training_set_release_2.0/images
+val: U:/GitHub/Fridge-Ingredient-Detection-with-AI/fridge-ai/archive/raw_data/public_validation_set_2.0/images
+
+nc: 498
+
 names:
 - Beef, sirloin steak
 - Carrot, steamed, without addition of salt
@@ -497,7 +502,4 @@ names:
 - Kebab in pita bread
 - Bread, toast
 - Popcorn salted
-nc: 498
-train: U:/GitHub/Fridge-Ingredient-Detection-with-AI/fridge-ai/archive/raw_data/public_training_set_release_2.0/images
-val: U:/GitHub/Fridge-Ingredient-Detection-with-AI/fridge-ai/archive/raw_data/public_validation_set_2.0/images
 
