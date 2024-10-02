@@ -23,7 +23,7 @@ export async function POST(request) {
   try {
     fs.writeFileSync(tempFilePath, buffer);
 
-    // Call YOLOv8 detection Python script, passing the file path as an argument
+    // Call Detectron2-based detection Python script, passing the file path as an argument
     return new Promise((resolve, reject) => {
       const python = spawn('python', ['detect.py', tempFilePath]);
 

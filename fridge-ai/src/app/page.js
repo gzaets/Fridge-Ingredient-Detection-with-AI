@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
-import Image from "next/image";
+import Image from 'next/image';
 import ImageUpload from './components/ImageUpload';
 
 export default function Home() {
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState([]);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -19,10 +19,10 @@ export default function Home() {
           priority
         />
         <h1 className="text-2xl font-semibold mb-6 text-center sm:text-left">Fridge AI</h1>
-        
+
         <div className="w-full bg-white dark:bg-gray-800 shadow-lg rounded-3xl p-6 sm:p-10">
           <ImageUpload onResult={setResults} />
-          {results && (
+          {results.length > 0 ? ( // Check if results has any items
             <div className="mt-6">
               <h2 className="text-xl font-semibold mb-2">Detected Ingredients:</h2>
               <ul className="list-disc pl-5">
@@ -32,6 +32,11 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+            </div>
+          ) : (
+            <div className="mt-6">
+              <h2 className="text-xl font-semibold mb-2">Detected Ingredients:</h2>
+              <p>No ingredients detected.</p> {/* Fallback message if no results */}
             </div>
           )}
         </div>
