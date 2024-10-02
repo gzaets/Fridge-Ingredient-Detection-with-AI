@@ -39,7 +39,7 @@ next-env.d.ts
 yolov8-env/
 
 # Training Data
-archive/
+training_datasets/
 
 # Training Logs
 runs/
