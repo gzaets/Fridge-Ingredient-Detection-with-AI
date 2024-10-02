@@ -23,32 +23,34 @@ export async function POST(request) {
   try {
     fs.writeFileSync(tempFilePath, buffer);
 
-    // Call Detectron2-based detection Python script, passing the file path as an argument
+    // Call the Python detection script, passing the file path as an argument
     return new Promise((resolve, reject) => {
-      const python = spawn('python', ['detect.py', tempFilePath]);
+      const python = spawn('python3', ['detect.py', tempFilePath]);
 
       let dataBuffer = '';  // Buffer to accumulate the output
+      let errorBuffer = ''; // Buffer to accumulate stderr
 
       python.stdout.on('data', (data) => {
         dataBuffer += data.toString();  // Accumulate output
       });
 
-      python.stdout.on('end', () => {
-        try {
-          const result = JSON.parse(dataBuffer.trim());  // Trim and parse the accumulated output
-          resolve(NextResponse.json({ ingredients: result }));
-        } catch (error) {
-          console.error('Error parsing JSON:', error);
-          reject(NextResponse.json({ error: 'Invalid detection result' }, { status: 500 }));
-        }
-      });
-
       python.stderr.on('data', (data) => {
-        console.error('Python error:', data.toString());
-        reject(NextResponse.json({ error: 'Detection failed' }, { status: 500 }));
+        errorBuffer += data.toString(); // Accumulate stderr
       });
 
-      python.on('close', () => {
+      python.on('close', (code) => {
+        if (code !== 0) {
+          console.error('Python error:', errorBuffer);
+          reject(NextResponse.json({ error: 'Detection failed' }, { status: 500 }));
+        } else {
+          try {
+            const result = JSON.parse(dataBuffer.trim());
+            resolve(NextResponse.json({ ingredients: result }));
+          } catch (error) {
+            console.error('Error parsing JSON:', error);
+            reject(NextResponse.json({ error: 'Invalid detection result' }, { status: 500 }));
+          }
+        }
         // Clean up the temporary file after processing
         fs.unlinkSync(tempFilePath);
       });

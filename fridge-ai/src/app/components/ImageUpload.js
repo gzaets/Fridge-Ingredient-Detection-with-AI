@@ -80,12 +80,12 @@ export default function ImageUpload({ onResult }) {
 
   return (
     <div className="min-h-screen bg-black flex flex-col justify-center items-center relative">
-      
       {/* Stylized Title */}
       <div className="absolute top-4 right-4 text-silver-300 text-2xl font-bold tracking-widest text-right shadow-lg reflection-effect">
         fridge ai <br /> by Georgy Zaets
       </div>
       
+      {/* Image Upload Form */}
       <form onSubmit={handleSubmit} className="space-y-4 bg-black p-8 rounded-lg shadow-md text-white">
         <input
           type="file"

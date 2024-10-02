@@ -1,60 +1,69 @@
-import { NextResponse } from 'next/server';
-import { spawn } from 'child_process';
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
-export async function POST(request) {
-  const data = await request.formData();
-  const file = data.get('image');
+import cv2
+import torch
+from detectron2.engine import DefaultPredictor
+from detectron2.config import get_cfg
+from detectron2 import model_zoo
+import os
+import sys
+import json
 
-  if (!file) {
-    return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
-  }
+def detect_objects(image_path):
+    # Ensure the file exists
+    if not os.path.exists(image_path):
+        raise ValueError(f"Image path {image_path} does not exist.")
 
-  // Convert the image file to a Buffer
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
+    # Load the image using OpenCV
+    img = cv2.imread(image_path)
+    if img is None:
+        raise ValueError(f"Could not read the image file {image_path}.")
 
-  // Write the image buffer to a temporary file
-  const tempDir = os.tmpdir(); // Use the OS temporary directory
-  const tempFilePath = path.join(tempDir, `upload-${Date.now()}.jpg`);
+    # Setup Detectron2 configuration
+    cfg = get_cfg()
+    cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"))
+    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml")
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # Set threshold for this model
+    cfg.MODEL.DEVICE = "cpu"  # Or use "cuda" if you have a GPU available
 
-  try {
-    fs.writeFileSync(tempFilePath, buffer);
+    # Initialize the predictor
+    predictor = DefaultPredictor(cfg)
 
-    // Call the Python script, passing the file path as an argument
-    return new Promise((resolve, reject) => {
-      const python = spawn('python3', ['detect.py', tempFilePath]);
+    # Perform the detection
+    outputs = predictor(img)
 
-      let dataBuffer = '';  // Buffer to accumulate the output
+    # Extract the instances
+    instances = outputs["instances"].to("cpu")
+    boxes = instances.pred_boxes if instances.has("pred_boxes") else None
+    scores = instances.scores if instances.has("scores") else None
+    classes = instances.pred_classes if instances.has("pred_classes") else None
 
-      python.stdout.on('data', (data) => {
-        dataBuffer += data.toString();  // Accumulate output
-      });
+    ingredients = []
+    if boxes is not None:
+        class_names = predictor.metadata.get("thing_classes", None)
+        for i in range(len(boxes)):
+            label_id = int(classes[i].item())
+            label = class_names[label_id] if class_names else str(label_id)
+            ingredients.append({
+                "label": label,  # Use class name instead of index
+                "confidence": float(scores[i].item()),  # Confidence score
+            })
 
-      python.stdout.on('end', () => {
-        try {
-          const result = JSON.parse(dataBuffer.trim());  // Trim and parse the accumulated output
-          resolve(NextResponse.json({ ingredients: result }));
-        } catch (error) {
-          console.error('Error parsing JSON:', error);
-          reject(NextResponse.json({ error: 'Invalid detection result' }, { status: 500 }));
-        }
-      });
+    return ingredients
 
-      python.stderr.on('data', (data) => {
-        console.error('Python error:', data.toString());
-        reject(NextResponse.json({ error: 'Detection failed' }, { status: 500 }));
-      });
 
-      python.on('close', () => {
-        // Clean up the temporary file after processing
-        fs.unlinkSync(tempFilePath);
-      });
-    });
-  } catch (error) {
-    console.error('Error writing file:', error);
-    return NextResponse.json({ error: 'Failed to process image' }, { status: 500 });
-  }
-}
+if __name__ == "__main__":
+    try:
+        # Get the image file path from the command line arguments
+        image_path = sys.argv[1]
+
+        # Process the image and print the results as JSON
+        result = detect_objects(image_path)
+
+        # Print valid JSON output
+        print(json.dumps(result))
+
+    except Exception as e:
+        # Return error as JSON
+        print(json.dumps({"error": str(e)}))
