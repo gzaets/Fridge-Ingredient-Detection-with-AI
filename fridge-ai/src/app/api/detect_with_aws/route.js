@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import AWS from 'aws-sdk';
+import { RekognitionClient, DetectLabelsCommand } from '@aws-sdk/client-rekognition';
 
-// Initialize AWS Rekognition client
-const rekognition = new AWS.Rekognition({ region: 'us-west-2' });
+// Initialize AWS Rekognition client with v3 SDK
+const rekognition = new RekognitionClient({ region: 'us-west-2' });
 
 export async function POST(request) {
   const data = await request.formData();
@@ -13,6 +13,12 @@ export async function POST(request) {
 
   if (!file) {
     return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
+  }
+
+  // Ensure that the file is a valid image format (JPEG or PNG)
+  const mimeType = file.type;
+  if (!['image/jpeg', 'image/png'].includes(mimeType)) {
+    return NextResponse.json({ error: 'Invalid file format. Please upload a JPEG or PNG image.' }, { status: 400 });
   }
 
   // Convert the image file to a Buffer
@@ -26,14 +32,16 @@ export async function POST(request) {
   try {
     fs.writeFileSync(tempFilePath, buffer);
 
-    // Call AWS Rekognition API to detect objects in the image
+    // Prepare Rekognition parameters
     const rekognitionParams = {
       Image: { Bytes: buffer },
       MaxLabels: 10, // Limit to 10 labels
       MinConfidence: 70, // Minimum confidence level
     };
 
-    const rekognitionResponse = await rekognition.detectLabels(rekognitionParams).promise();
+    // Call AWS Rekognition to detect objects in the image
+    const command = new DetectLabelsCommand(rekognitionParams);
+    const rekognitionResponse = await rekognition.send(command);
 
     // Transform the response to match the frontend's expected structure
     const detectedLabels = rekognitionResponse.Labels.map(label => ({

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -16,7 +16,16 @@ export default function ImageUpload({ onResult }) {
   }, [results]);
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+
+    // Check if the file is in the correct format (JPEG or PNG)
+    if (!selectedFile || !['image/jpeg', 'image/png'].includes(selectedFile.type)) {
+      setError('Please upload a valid image in JPG or PNG format.');
+      return;
+    }
+
+    setError(null);
+    setImage(selectedFile);
   };
 
   const handleSubmit = async (e) => {
