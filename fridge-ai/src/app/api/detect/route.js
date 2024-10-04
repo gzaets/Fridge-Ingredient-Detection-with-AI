@@ -25,7 +25,7 @@ export async function POST(request) {
 
     // Call YOLOv8 detection Python script, passing the file path as an argument
     return new Promise((resolve, reject) => {
-      const python = spawn('python', ['detect.py', tempFilePath]);
+      const python = spawn('python3', ['detect.py', tempFilePath]);  // Use python3 explicitly
 
       let dataBuffer = '';  // Buffer to accumulate the output
 
@@ -50,7 +50,9 @@ export async function POST(request) {
 
       python.on('close', () => {
         // Clean up the temporary file after processing
-        fs.unlinkSync(tempFilePath);
+        fs.unlink(tempFilePath, (err) => {
+          if (err) console.error('Error cleaning up temporary file:', err);
+        });
       });
     });
   } catch (error) {

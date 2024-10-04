@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -41,6 +41,7 @@ export default function ImageUpload({ onResult }) {
         setError('Invalid data received from the server');
       }
     } catch (error) {
+      console.error('Error from server:', error.response ? error.response.data : error.message);
       setError('Error detecting ingredients. Please try again.');
     } finally {
       setLoading(false);
