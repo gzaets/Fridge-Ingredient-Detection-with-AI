@@ -5,14 +5,14 @@ A web application using Next.js and Tailwind CSS where users can upload a pictur
 
 - Detects ingredients in an image of a fridge.
 - Displays detected ingredients with count and average confidence.
-- Built with **YOLOv8** for accurate object detection.
+- Built with **YOLOv11** for accurate object detection.
 - Styled with **Tailwind CSS**.
 
 ## Requirements
 
 - **Node.js**: Make sure you have Node.js installed. You can download it from [nodejs.org](https://nodejs.org/).
-- **Python 3.8+**: You'll need Python 3.8 or higher to install and run YOLOv8. You can download Python from [python.org](https://www.python.org/).
-- **CUDA**: (Optional) For NVIDIA GPUs, if you'd like to run the model on GPU, you will need CUDA installed. For AMD users, the project uses CPU as ROCm support is limited.
+- **Python 3.8+**: You'll need Python 3.8 or higher to install and run YOLOv11. You can download Python from [python.org](https://www.python.org/).
+- **CUDA**: (Optional) For NVIDIA GPUs, you will need CUDA installed if you'd like to run the model on GPU. For AMD users, the project uses CPU as ROCm support is limited.
 
 ## Setup
 
@@ -28,7 +28,7 @@ cd fridge-ai
 
 ### 2. Install Node.js Dependencies
 
-Since the node_modules directory is excluded from version control, you need to install the Node.js dependencies. This will install all required packages listed in package.json:
+Since the node_modules directory is excluded from version control, you must install the Node.js dependencies. This will install all required packages listed in package.json:
 
 ```bash
 npm install
@@ -36,7 +36,7 @@ npm install
 
 ### 3. Install Python Dependencies
 
-Since the Python virtual environment (yolov8-env) is excluded from version control, you'll need to set up your own Python environment and install the required dependencies:
+Since the Python virtual environment (yolov11-env) is excluded from version control, you'll need to set up your own Python environment and install the required dependencies:
 
 #### 1. Create a Python Virtual Environment:
 
@@ -64,7 +64,7 @@ source yolov11-env/bin/activate
 
 #### 3. Install the Required Python Packages:
 
-Install the Python dependencies listed in requirements.txt. This will install YOLOv8 and other necessary libraries for object detection:
+Install the Python dependencies listed in requirements.txt. This will install YOLOv11 and other necessary libraries for object detection:
 
 ```bash
 pip install -r requirements.txt
@@ -83,7 +83,7 @@ npm run dev
 ```
 This will start the Next.js development server, and you can access the app in your browser at [http://localhost:3000](http://localhost:3000).
 
-The object detection is handled by Python scripts. Make sure your virtual environment is activated before running any detection tasks. The detection script (detect.py) will be triggered automatically when you upload an image in the web app.
+Python scripts handle object detection. Make sure your virtual environment is activated before running any detection tasks. The detection script (detect.py) will be triggered automatically when you upload an image in the web app.
 
 Additional Notes
 
