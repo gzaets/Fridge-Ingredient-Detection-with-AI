@@ -30,6 +30,25 @@ body {
   position: relative;
 }
 
+.neon-text {
+  color: #ff69b4; /* Neon pink color */
+  text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493, 0 0 90px #ff1493, 0 0 100px #ff1493;
+  font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+}
+
+.flicker-effect {
+  animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493, 0 0 90px #ff1493, 0 0 100px #ff1493;
+  }
+  20%, 24%, 55% {
+    text-shadow: 0 0 2px #ff69b4, 0 0 4px #ff69b4, 0 0 8px #ff69b4, 0 0 16px #ff1493, 0 0 32px #ff1493, 0 0 36px #ff1493, 0 0 40px #ff1493;
+  }
+}
+
 .reflection-effect::after {
   content: '';
   position: absolute;
@@ -41,4 +60,40 @@ body {
   transform: scaleY(-1);
   opacity: 0.4;
   filter: blur(2px);
+}
+
+.cyberpunk-font {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Snowfall Effect */
+.snow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Ensure that it does not block clicks */
+  overflow: hidden;
+  z-index: -1; /* Send it to the back */
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
 }

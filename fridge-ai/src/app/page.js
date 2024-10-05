@@ -1,25 +1,39 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import ImageUpload from './components/ImageUpload';
 
 export default function Home() {
   const [results, setResults] = useState(null);
 
+  // Effect to create snow effect
+  useEffect(() => {
+    createSnowEffect();
+  }, []);
+
+  const createSnowEffect = () => {
+    const snowContainer = document.createElement('div');
+    snowContainer.classList.add('snow-container');
+    document.body.appendChild(snowContainer);
+
+    for (let i = 0; i < 100; i++) {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+      snowflake.style.opacity = Math.random();
+      snowContainer.appendChild(snowflake);
+    }
+  };
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-3xl">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <h1 className="text-2xl font-semibold mb-6 text-center sm:text-left">Fridge AI</h1>
-        
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center w-full max-w-3xl">
+        <h1 className="text-5xl font-semibold mb-6 text-center neon-text flicker-effect cyberpunk-font">
+          Fridge AI
+        </h1>
+
         <div className="w-full bg-white dark:bg-gray-800 shadow-lg rounded-3xl p-6 sm:p-10">
           <ImageUpload onResult={setResults} />
         </div>
