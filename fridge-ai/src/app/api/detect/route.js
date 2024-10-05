@@ -23,9 +23,11 @@ export async function POST(request) {
   try {
     fs.writeFileSync(tempFilePath, buffer);
 
-    // Call YOLOv8 detection Python script, passing the file path as an argument
+    // Use Python from the virtual environment
+    const pythonPath = path.join(process.cwd(), 'venv', 'Scripts', 'python.exe');
+
     return new Promise((resolve, reject) => {
-      const python = spawn('python3', ['detect.py', tempFilePath]);  // Use python3 explicitly
+      const python = spawn(pythonPath, ['detect.py', tempFilePath]);
 
       let dataBuffer = '';  // Buffer to accumulate the output
 
@@ -35,8 +37,8 @@ export async function POST(request) {
 
       python.stdout.on('end', () => {
         try {
-          const result = JSON.parse(dataBuffer.trim());  // Trim and parse the accumulated output
-          resolve(NextResponse.json({ ingredients: result }));
+          const result = JSON.parse(dataBuffer.trim());  // Parse the JSON result from Python
+          resolve(NextResponse.json(result));  // Send the result as JSON
         } catch (error) {
           console.error('Error parsing JSON:', error);
           reject(NextResponse.json({ error: 'Invalid detection result' }, { status: 500 }));

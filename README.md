@@ -12,6 +12,7 @@ A web application using Next.js and Tailwind CSS where users can upload a pictur
 
 - **Node.js**: Make sure you have Node.js installed. You can download it from [nodejs.org](https://nodejs.org/).
 - **Python 3.8+**: You'll need Python 3.8 or higher to install and run YOLOv8. You can download Python from [python.org](https://www.python.org/).
+- **CUDA**: (Optional) For NVIDIA GPUs, if you'd like to run the model on GPU, you will need CUDA installed. For AMD users, the project uses CPU as ROCm support is limited.
 
 ## Setup
 
@@ -22,6 +23,7 @@ Follow the steps below to set up the project locally after cloning the repositor
 ```bash
 git clone https://github.com/yourusername/Fridge-Ingredient-Detection-with-AI.git
 cd Fridge-Ingredient-Detection-with-AI
+cd fridge-ai
 ```
 
 ### 2. Install Node.js Dependencies
@@ -40,7 +42,7 @@ Since the Python virtual environment (yolov8-env) is excluded from version contr
 
 ```bash
 
-python -m venv yolov8-env
+python -m venv yolov11-env
 
 ```
 
@@ -50,14 +52,14 @@ On Windows:
 
 ```bash
 
-yolov8-env\Scripts\activate
+yolov11-env\Scripts\activate
 ```
 
 On macOS/Linux:
 
 ```bash
 
-source yolov8-env/bin/activate
+source yolov11-env/bin/activate
 ```
 
 #### 3. Install the Required Python Packages:
@@ -68,11 +70,9 @@ Install the Python dependencies listed in requirements.txt. This will install YO
 pip install -r requirements.txt
 ```
 
-### 4. Download YOLOv8 Weights
+### 4. Download YOLOv11 Weights
 
-The YOLOv8 model weights are not included in the repository. The first time you run the app, YOLOv8 will automatically download the model weights (e.g., yolov8n.pt). However, if you want to manually download them, you can do so from the [YOLOv8 repository.](https://github.com/ultralytics/ultralytics)
-
-Alternatively, you can place the weights in the appropriate directory after downloading.
+The YOLOv11x model weights (yolo11x.pt) are not included in the repository. You can download them manually and place them in the appropriate directory. Find more information here (https://github.com/swNotJoao/yolov11).
 
 ### 5. Run the Development Server
 
@@ -85,6 +85,9 @@ This will start the Next.js development server, and you can access the app in yo
 
 The object detection is handled by Python scripts. Make sure your virtual environment is activated before running any detection tasks. The detection script (detect.py) will be triggered automatically when you upload an image in the web app.
 
+Additional Notes
+
+- **Using CPU for Detection** Since you are using an AMD GPU, the system defaults to using the CPU for object detection due to limited ROCm support. If you have an NVIDIA GPU, CUDA can be used for faster detections.
 
 
 
