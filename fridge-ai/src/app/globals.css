@@ -20,22 +20,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-.reflection-effect {
-  position: relative;
-}
-
+/* Neon Text for Title */
 .neon-text {
   color: #ff69b4; /* Neon pink color */
   text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493, 0 0 90px #ff1493, 0 0 100px #ff1493;
-  font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+  font-family: 'Orbitron', sans-serif;
 }
 
+/* Flicker Effect for Neon Text */
 .flicker-effect {
   animation: flicker 2s infinite alternate;
 }
@@ -49,6 +41,7 @@ body {
   }
 }
 
+/* Reflection Effect for Title */
 .reflection-effect::after {
   content: '';
   position: absolute;
@@ -62,10 +55,6 @@ body {
   filter: blur(2px);
 }
 
-.cyberpunk-font {
-  font-family: 'Orbitron', sans-serif;
-}
-
 /* Snowfall Effect */
 .snow-container {
   position: fixed;
@@ -73,9 +62,9 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* Ensure that it does not block clicks */
+  pointer-events: none;
   overflow: hidden;
-  z-index: -1; /* Send it to the back */
+  z-index: -1;
 }
 
 .snowflake {
@@ -96,4 +85,26 @@ body {
   100% {
     transform: translateY(100vh);
   }
+}
+
+/* Button with Orbitron Font and Green Neon Glow */
+.button-orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
+
+.text-neon-green {
+  color: #39ff14;
+}
+
+.border-neon-green {
+  border-color: #39ff14;
+}
+
+.shadow-neon-green {
+  box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 30px #39ff14, 0 0 40px #39ff14;
+}
+
+/* Orange Neon Glow for "Detect Ingredients" Button */
+.glow-neon-orange {
+  box-shadow: 0 0 5px #ffae42, 0 0 10px #ffae42;
 }
