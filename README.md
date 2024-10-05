@@ -5,7 +5,7 @@ A web application using Next.js and Tailwind CSS where users can upload a pictur
 
 - Detects ingredients in an image of a fridge.
 - Displays detected ingredients with count and average confidence.
-- Built with **YOLOv8** for accurate object detection.
+- Built with **YOLOv11** for accurate object detection.
 - Styled with **Tailwind CSS**.
 
 ## Requirements
