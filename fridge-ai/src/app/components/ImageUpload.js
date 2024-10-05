@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -41,8 +43,8 @@ export default function ImageUpload({ onResult }) {
       });
 
       if (response.data && response.data.ingredients) {
-        setResults(response.data.ingredients);  // Get only the item names
-        onResult(response.data.ingredients);    // Pass the results to the parent component
+        setResults(response.data.ingredients);
+        onResult(response.data.ingredients);
       } else {
         setError('Invalid data received from the server');
       }
@@ -66,20 +68,25 @@ export default function ImageUpload({ onResult }) {
           onChange={handleImageChange}
           className={`block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100`}
         />
+        
+        {/* Detect Ingredients button with glow */}
         <button
           type="submit"
           disabled={!image || loading}
-          className="px-4 py-2 bg-transparent text-neon-green font-orbitron text-2xl border border-neon-green shadow-lg hover:shadow-neon focus:outline-none focus:ring-2 focus:ring-neon-green disabled:opacity-50 transition-transform transform hover:scale-105"
+          className="px-4 py-2 bg-transparent text-neon-green font-orbitron text-2xl border border-neon-green shadow-lg hover:shadow-neon-green focus:outline-none focus:ring-2 focus:ring-neon-green disabled:opacity-50 transition-transform transform hover:scale-105"
         >
           {loading ? 'Detecting...' : 'Detect Ingredients'}
         </button>
+        
         {error && <p className="text-red-500">{error}</p>}
+        
         {loading && (
           <div className="flex justify-center items-center">
             <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
             <p className="ml-4 text-blue-500">Processing your image, please wait...</p>
           </div>
         )}
+
         <div className="mt-4">
           {results.length > 0 && (
             <ul>

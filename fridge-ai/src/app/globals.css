@@ -78,4 +78,38 @@ body {
   animation: falling linear infinite;
 }
 
-@key
+@keyframes falling {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+/* Button with Orbitron Font and Green Neon Glow */
+.button-orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
+
+.text-neon-green {
+  color: #39ff14;
+}
+
+.border-neon-green {
+  border-color: #39ff14;
+}
+
+.shadow-neon-green {
+  box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 30px #39ff14, 0 0 40px #39ff14;
+}
+
+/* Snowflake Falling Animation */
+@keyframes falling {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(120vh); /* Fall beyond the screen */
+  }
+}
