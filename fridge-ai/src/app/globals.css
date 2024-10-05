@@ -108,3 +108,13 @@ body {
 .glow-neon-orange {
   box-shadow: 0 0 5px #ffae42, 0 0 10px #ffae42;
 }
+
+/* Snowflake Falling Animation */
+@keyframes falling {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(120vh); /* Fall beyond the screen */
+  }
+}
