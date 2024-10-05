@@ -20,14 +20,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Neon Text for Title */
+/* Neon Text for Title and File Name */
 .neon-text {
   color: #ff69b4; /* Neon pink color */
   text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 80px #ff1493, 0 0 90px #ff1493, 0 0 100px #ff1493;
   font-family: 'Orbitron', sans-serif;
 }
 
-/* Flicker Effect for Neon Text */
+/* Flicker Effect for Neon Text and File Name */
 .flicker-effect {
   animation: flicker 2s infinite alternate;
 }
@@ -92,6 +92,7 @@ body {
   font-family: 'Orbitron', sans-serif;
 }
 
+/* Green Neon Text and Buttons */
 .text-neon-green {
   color: #39ff14;
 }
@@ -103,6 +104,28 @@ body {
 .shadow-neon-green {
   box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 30px #39ff14, 0 0 40px #39ff14;
 }
+
+/* Green Flicker Effect for Buttons */
+.flicker-effect-green {
+  animation: flicker-green 2s infinite alternate;
+}
+
+/* Keyframes for Green Flicker */
+@keyframes flicker-green {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 40px #39ff14, 0 0 80px #39ff14, 0 0 90px #39ff14, 0 0 100px #39ff14;
+  }
+  20%, 24%, 55% {
+    text-shadow: 0 0 2px #39ff14, 0 0 4px #39ff14, 0 0 8px #39ff14, 0 0 16px #39ff14, 0 0 32px #39ff14, 0 0 36px #39ff14, 0 0 40px #39ff14;
+  }
+}
+
+/* Green Orbitron Font for Detected Ingredients */
+.text-neon-green-orbitron {
+  color: #39ff14;
+  font-family: 'Orbitron', sans-serif;
+}
+
 
 /* Snowflake Falling Animation */
 @keyframes falling {
