@@ -56,37 +56,6 @@ export default function ImageUpload({ onResult }) {
     }
   };
 
-  // Group and calculate count and average confidence for each item type
-  const groupAndCategorizeResults = (results) => {
-    const groupedResults = {};
-
-    results.forEach((item) => {
-      const label = item.label ? item.label.charAt(0).toUpperCase() + item.label.slice(1) : "Unknown"; // Capitalize the first letter of each label
-
-      // Ensure confidence is a valid number
-      const confidence = item.confidence != null && !isNaN(item.confidence) ? item.confidence : 0;
-
-      if (!groupedResults[label]) {
-        groupedResults[label] = { count: 0, totalConfidence: 0, confidences: [] };
-      }
-
-      groupedResults[label].count += 1;
-      groupedResults[label].totalConfidence += confidence;
-      groupedResults[label].confidences.push(confidence);  // Store individual confidences
-    });
-
-    // Convert to array with average and confidence range
-    const processedResults = Object.entries(groupedResults).map(([label, data]) => ({
-      label,
-      count: data.count,
-      averageConfidence: data.count > 0 ? (data.totalConfidence / data.count) * 100 : 0,
-      minConfidence: Math.min(...data.confidences) * 100,  // Lowest confidence
-      maxConfidence: Math.max(...data.confidences) * 100,  // Highest confidence
-    }));
-
-    return processedResults.sort((a, b) => a.label.localeCompare(b.label));
-  };
-
   return (
     <div className="min-h-screen bg-black flex flex-col justify-center items-center relative">
       
@@ -124,9 +93,9 @@ export default function ImageUpload({ onResult }) {
         <div className="mt-4">
           {results.length > 0 && (
             <ul>
-              {groupAndCategorizeResults(results).map((result, index) => (
+              {results.map((result, index) => (
                 <li key={index}>
-                  {result.label}: Count: {result.count}, Confidence range: {result.minConfidence.toFixed(1)}% - {result.maxConfidence.toFixed(1)}% (Avg: {result.averageConfidence.toFixed(1)}%)
+                  {result.label}
                 </li>
               ))}
             </ul>

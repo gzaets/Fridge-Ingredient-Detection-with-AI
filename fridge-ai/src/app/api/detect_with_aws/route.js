@@ -43,14 +43,21 @@ export async function POST(request) {
     const command = new DetectLabelsCommand(rekognitionParams);
     const rekognitionResponse = await rekognition.send(command);
 
-    // Transform the response to match the frontend's expected structure
-    const detectedLabels = rekognitionResponse.Labels.map(label => ({
-      label: label.Name,
-      confidence: label.Confidence,
-    }));
+    // Aggregate counts by label
+    const aggregatedCounts = rekognitionResponse.Labels.reduce((acc, label) => {
+      if (acc[label.Name]) {
+        acc[label.Name].count += 1; // Increment if label already exists
+      } else {
+        acc[label.Name] = { label: label.Name, count: 1 }; // Initialize count to 1
+      }
+      return acc;
+    }, {});
 
-    // Respond with detected labels
-    return NextResponse.json({ ingredients: detectedLabels });
+    // Convert aggregated counts back to an array
+    const results = Object.values(aggregatedCounts);
+
+    // Respond with detected labels and counts
+    return NextResponse.json({ ingredients: results });
   } catch (error) {
     console.error('Error during AWS Rekognition request:', error);
     return NextResponse.json({ error: 'Failed to process image with AWS Rekognition' }, { status: 500 });

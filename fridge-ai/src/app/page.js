@@ -22,18 +22,6 @@ export default function Home() {
         
         <div className="w-full bg-white dark:bg-gray-800 shadow-lg rounded-3xl p-6 sm:p-10">
           <ImageUpload onResult={setResults} />
-          {results && (
-            <div className="mt-6">
-              <h2 className="text-xl font-semibold mb-2">Detected Ingredients:</h2>
-              <ul className="list-disc pl-5">
-                {results.map((item, index) => (
-                  <li key={index}>
-                    {item.class} (Confidence: {(item.score * 100).toFixed(2)}%)
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row mt-8">

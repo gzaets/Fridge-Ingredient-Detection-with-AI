@@ -13,15 +13,18 @@ def detect_objects(image_path):
             MinConfidence=70  # Min confidence level for label detection
         )
 
-    # Process response
-    detected_labels = []
+    # Aggregate counts by label
+    label_counts = {}
     for label in response['Labels']:
-        detected_labels.append({
-            'Name': label['Name'],
-            'Confidence': label['Confidence']
-        })
+        if label['Name'] in label_counts:
+            label_counts[label['Name']]['count'] += 1
+        else:
+            label_counts[label['Name']] = {
+                'Name': label['Name'],
+                'count': 1
+            }
 
-    return detected_labels
+    return list(label_counts.values())
 
 if __name__ == "__main__":
     image_path = "C:/Users/zaets/Downloads/full_fridge.jpg"  # Corrected image path
