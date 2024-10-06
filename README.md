@@ -12,6 +12,7 @@ A web application using Next.js and Tailwind CSS where users can upload a pictur
 
 - **Node.js**: Make sure you have Node.js installed. You can download it from [nodejs.org](https://nodejs.org/).
 - **Python 3.8+**: You'll need Python 3.8 or higher to install and run YOLOv11. You can download Python from [python.org](https://www.python.org/).
+- **Python 3.12 is NOT supported YET!**: Python 3.10.7 was used for development and testing
 - **CUDA**: (Optional) For NVIDIA GPUs, you will need CUDA installed if you'd like to run the model on GPU. For AMD users, the project uses CPU as ROCm support is limited.
 
 ## Setup
@@ -36,13 +37,13 @@ npm install
 
 ### 3. Install Python Dependencies
 
-Since the Python virtual environment (yolov11-env) is excluded from version control, you'll need to set up your own Python environment and install the required dependencies:
+Since the Python virtual environment (venv) is excluded from version control, you'll need to set up your own Python environment and install the required dependencies:
 
 #### 1. Create a Python Virtual Environment:
 
 ```bash
 
-python -m venv yolov11-env
+python -m venv venv
 
 ```
 
@@ -52,14 +53,14 @@ On Windows:
 
 ```bash
 
-yolov11-env\Scripts\activate
+venv\Scripts\activate
 ```
 
 On macOS/Linux:
 
 ```bash
 
-source yolov11-env/bin/activate
+source venv/bin/activate
 ```
 
 #### 3. Install the Required Python Packages:
