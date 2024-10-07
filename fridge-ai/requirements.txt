@@ -1,3 +1,4 @@
+boto3==1.28.23
 certifi==2024.8.30
 charset-normalizer==3.3.2
 colorama==0.4.6
@@ -30,11 +31,7 @@ seaborn==0.13.2
 setuptools==75.1.0
 six==1.16.0
 sympy==1.13.3
-torch==2.4.1
-torchvision==0.19.1
 tqdm==4.66.5
 typing_extensions==4.12.2
 tzdata==2024.2
-ultralytics==8.2.102
-ultralytics-thop==2.0.8
 urllib3==2.2.3
