@@ -47,6 +47,8 @@ Since the Python virtual environment (venv) is excluded from version control, yo
 
 #### 1. Create a Python Virtual Environment:
 
+If you have multiple versions of Python installed, you can specify the Python version when creating the virtual environment. It is recommended to use Python 3.10 for this project because Python 3.12 is not supported by some libraries.
+
 ```bash
 
 python -m venv venv
@@ -71,9 +73,19 @@ source venv/bin/activate
 
 #### 3. Install the Required Python Packages:
 
-Install the Python dependencies listed in requirements.txt:
+Make sure to upgrade pip and install the Python dependencies listed in requirements.txt:
 
 ```bash
+python -m pip install --upgrade pip
+OR 
+python3 -m pip install --upgrade pip
+```
+Some other users may need to use the following command to upgrade pip:
+
+```bash
+python.exe -m pip install --upgrade pip
+```
+
 pip install -r requirements.txt
 ```
 
