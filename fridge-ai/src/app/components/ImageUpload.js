@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function ImageUpload({ onResult }) {
-  // State for handling selected image, loading status, error messages, and detection results
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -46,7 +45,7 @@ export default function ImageUpload({ onResult }) {
     formData.append('image', image);
 
     try {
-      // Send the image to the backend API (replace '/api/detect_with_aws' with your own endpoint)
+      // Send the image to the backend API
       const response = await axios.post('/api/detect_with_aws', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
@@ -76,29 +75,40 @@ export default function ImageUpload({ onResult }) {
       </div>
 
       {/* Form for file input and detection */}
-      <form onSubmit={handleSubmit} className="space-y-4 bg-black p-4 rounded-lg shadow-md text-white max-w-sm">
+      <form onSubmit={handleSubmit} className="space-y-4 bg-black p-8 rounded-lg shadow-md text-white max-w-sm">
         
         {/* Input field for choosing an image */}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className={`block w-full text-sm text-gray-500
-            file:mr-4 file:py-1 file:px-2
-            file:rounded-full file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-50 file:text-blue-700
-            hover:file:bg-blue-100`}
-        />
+        <div className="flex flex-col items-center">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+            id="file-upload"
+          />
+          <label 
+            htmlFor="file-upload" 
+            className="neon-text flicker-effect border-pink-500 hover:shadow-pink text-pink-400 px-4 py-2 cursor-pointer rounded-full border-2 text-2xl transition-transform transform hover:scale-105"
+          >
+            Choose File
+          </label>
 
-        {/* Submit button to trigger the detection process */}
-        <button
-          type="submit"
-          disabled={!image || loading}  // Disabled if no image is selected or detection is in progress
-          className="px-4 py-2 rounded-full bg-transparent text-neon-green font-orbitron text-2xl border border-neon-green shadow-lg hover:shadow-neon focus:outline-none focus:ring-2 focus:ring-neon-green disabled:opacity-50 transition-transform transform hover:scale-105"
-        >
-          {loading ? 'Detecting...' : 'Detect Ingredients'}
-        </button>
+          {/* Display the custom-styled file name if a file is selected */}
+          {image && (
+            <div className="neon-text flicker-effect mt-2">
+              {image.name}
+            </div>
+          )}
+
+          {/* Detect Ingredients button with green flicker and neon glow */}
+          <button
+            type="submit"
+            disabled={!image || loading}
+            className="px-4 py-2 bg-transparent mt-4 text-neon-green font-orbitron text-2xl border border-neon-green shadow-lg hover:shadow-neon-green flicker-effect-green focus:outline-none focus:ring-2 focus:ring-neon-green disabled:opacity-50 transition-transform transform hover:scale-105 rounded-full"
+          >
+            {loading ? 'Detecting...' : 'Detect Ingredients'}
+          </button>
+        </div>
 
         {/* Error message display */}
         {error && <p className="text-red-500">{error}</p>}
@@ -116,9 +126,7 @@ export default function ImageUpload({ onResult }) {
           {results.length > 0 && (
             <ul>
               {results.map((result, index) => (
-                <li key={index}>
-                  {result.label}
-                </li>
+                <li key={index} className="text-neon-green-orbitron">{result.label}</li>
               ))}
             </ul>
           )}
