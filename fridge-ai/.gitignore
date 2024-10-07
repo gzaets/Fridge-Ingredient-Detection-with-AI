@@ -37,6 +37,7 @@ next-env.d.ts
 
 # Python virtual environment
 yolov8-env/
+venv/
 
 # Training Data
 archive/
