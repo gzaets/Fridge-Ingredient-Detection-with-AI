@@ -9,6 +9,7 @@ A web application built using **Next.js** and **Tailwind CSS** that allows users
 - Styled with **Tailwind CSS** for a visually engaging user interface.
 - Integrated with **AWS Rekognition** for high accuracy in ingredient detection.
 - Snowfall animation and neon cyberpunk-style UI with interactive effects.
+- Deployed using Vercel for easy access and testing.
 
 ## Requirements
 
