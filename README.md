@@ -86,18 +86,21 @@ Some other users may need to use the following command to upgrade pip:
 python.exe -m pip install --upgrade pip
 ```
 
+Then install the required packages:
+```bash
 pip install -r requirements.txt
 ```
 
 ### 4. AWS Rekognition Setup
 
-To use AWS Rekognition, you will need to set up your AWS credentials. Ensure that you have the correct AWS credentials set up for using AWS Rekognition. You can either configure your environment with AWS CLI or manually set the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your environment variables.
+To use AWS Rekognition, you will need to set up your AWS credentials. Ensure that you have the correct AWS credentials set up for using AWS Rekognition. You can either configure your environment with AWS CLI or manually set the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your environment variables:
 
 ```bash
 pip install boto3
 ```
 
 #### 1. Install AWS CLI (Optional but recommended):
+AWS CLI is a command-line tool that allows you to interact with AWS services using commands in your terminal. It is recommended to install AWS CLI to manage your AWS credentials and configurations:
 ```bash
 pip install awscli
 ```
