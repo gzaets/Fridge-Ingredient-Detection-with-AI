@@ -39,9 +39,6 @@ next-env.d.ts
 venv/
 yolov11-env/
 
-# Training Data
-archive/
-
 # Training Logs
 runs/
 detect/
@@ -50,7 +47,7 @@ detect/
 gpu_test/
 
 # Model files
-*.pt
+# *.pt
 models/
 
 
